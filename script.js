@@ -37,19 +37,20 @@ function calcularCusto(solucao, cidades) { //Calcula a dist√¢ncia total da solu√
 }
 
 function simulatedAnnealing(cidades, temperatura, taxaResfrio, numeroIteracoes, solucaoInicial) {
+    let solucaoAtual = solucaoInicial;
     let melhorSolucao = solucaoInicial.slice();
 
     for (let iteracao = 0; iteracao < numeroIteracoes; iteracao++) {
-        const proxSolucao = gerarSolucaoVizinha(currentSolution);
-        const custoAtual = calcularCusto(currentSolution, cidades);
+        const proxSolucao = gerarSolucaoVizinha(solucaoAtual);
+        const custoAtual = calcularCusto(solucaoAtual, cidades);
         const proxCusto = calcularCusto(proxSolucao, cidades);
 
         if (probAceitacao(custoAtual, proxCusto, temperatura) > Math.random()) {
-            currentSolution = proxSolucao.slice();
+            solucaoAtual = proxSolucao.slice();
         }
 
-        if (calcularCusto(solucaoInicial, cidades) < calcularCusto(melhorSolucao, cidades)) {
-            melhorSolucao = currentSolution.slice();
+        if (calcularCusto(solucaoAtual, cidades) < calcularCusto(melhorSolucao, cidades)) {
+            melhorSolucao = solucaoAtual.slice();
         }
 
         temperatura *= 1 - taxaResfrio;
@@ -85,3 +86,8 @@ let solucaoInicial = criarSolucaoInicial(numeroCidades)
 let temperaturaInicial = 1000.0
 let taxaResfrio = 0.003
 let numeroIteracoes = 1000
+let melhorRota = simulatedAnnealing(cidades, temperaturaInicial, taxaResfrio, numeroIteracoes, solucaoInicial)
+console.log(solucaoInicial)
+console.log(calcularCusto(solucaoInicial, cidades))
+console.log(melhorRota)
+console.log(calcularCusto(melhorRota, cidades))
