@@ -36,6 +36,29 @@ function calcularCusto(solucao, cidades) { //Calcula a dist√¢ncia total da solu√
     return custoTotal
 }
 
+function simulatedAnnealing(cidades, temperatura, taxaResfrio, numeroIteracoes, solucaoInicial) {
+    let melhorSolucao = solucaoInicial.slice();
+
+    for (let iteracao = 0; iteracao < numeroIteracoes; iteracao++) {
+        const proxSolucao = vizinho(currentSolution);
+        const custoAtual = calcularCusto(currentSolution, cidades);
+        const proxCusto = calcularCusto(proxSolucao, cidades);
+
+        if (probAceitacao(custoAtual, proxCusto, temperatura) > Math.random()) {
+            currentSolution = proxSolucao.slice();
+        }
+
+        if (calcularCusto(solucaoInicial, cidades) < calcularCusto(melhorSolucao, cidades)) {
+            melhorSolucao = currentSolution.slice();
+        }
+
+        temperatura *= 1 - taxaResfrio;
+    }
+
+    return melhorSolucao;
+}
+
+
 let numeroCidades = 10
 let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
 let solucaoInicial = criarSolucaoInicial(numeroCidades)
