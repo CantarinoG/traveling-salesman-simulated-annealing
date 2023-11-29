@@ -9,7 +9,7 @@ function criarCoordenadas(n) { //Esta função gera uma lista com n pares de coo
     return lista;
 }
 
-function criarSolucaoInicial(n) { //Cria uma solução inicial
+function criarSolucaoInicial(n) {
     let solucaoInicial = []
     for (let i = 0; i < n; i++) {
         solucaoInicial.push(i);
@@ -21,7 +21,7 @@ function criarSolucaoInicial(n) { //Cria uma solução inicial
     return solucaoInicial
 }
 
-function calcularCusto(solucao, cidades) { //Calcula a distância total da solução
+function calcularCusto(solucao, cidades) {
     let custoTotal = 0
     for (let i = 0; i < cidades.length; i++) {
         const cidadeAtual = solucao[i];
