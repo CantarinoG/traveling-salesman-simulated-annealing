@@ -40,7 +40,7 @@ function simulatedAnnealing(cidades, temperatura, taxaResfrio, numeroIteracoes, 
     let melhorSolucao = solucaoInicial.slice();
 
     for (let iteracao = 0; iteracao < numeroIteracoes; iteracao++) {
-        const proxSolucao = vizinho(currentSolution);
+        const proxSolucao = gerarSolucaoVizinha(currentSolution);
         const custoAtual = calcularCusto(currentSolution, cidades);
         const proxCusto = calcularCusto(proxSolucao, cidades);
 
@@ -58,6 +58,19 @@ function simulatedAnnealing(cidades, temperatura, taxaResfrio, numeroIteracoes, 
     return melhorSolucao;
 }
 
+function gerarSolucaoVizinha(solucao) {
+    const indices = [];
+    while (indices.length < 2) {
+        const indiceAleatorio = Math.floor(Math.random() * solucao.length);
+        if (!indices.includes(indiceAleatorio)) {
+            indices.push(indiceAleatorio);
+        }
+    }
+    const [ind1, ind2] = indices
+    const solucaovizinha = solucao.slice();
+    [solucaovizinha[ind1], solucaovizinha[ind2]] = [solucaovizinha[ind2], solucaovizinha[ind1]];
+    return solucaovizinha;
+}
 
 let numeroCidades = 10
 let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
