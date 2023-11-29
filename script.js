@@ -21,6 +21,21 @@ function criarSolucaoInicial(n) { //Cria uma solução inicial
     return solucaoInicial
 }
 
+function calcularCusto(solucao, cidades) {
+    let custoTotal = 0
+    for (let i = 0; i < cidades.length; i++) {
+        const cidadeAtual = solucao[i];
+        const proxCidade = solucao[(i + 1) % cidades.length]
+        const coordenadasAtuais = cidades[cidadeAtual]
+        const proxCoordenadas = cidades[proxCidade]
+        const diferencaX = coordenadasAtuais[0] - proxCoordenadas[0];
+        const diferencaY = coordenadasAtuais[1] - proxCoordenadas[1];
+        const distancia = Math.sqrt(diferencaX * diferencaX + diferencaY * diferencaY);
+        custoTotal += distancia
+    }
+    return custoTotal
+}
+
 let numeroCidades = 10
 let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
-let solucaoInicial = criarSolucaoInicial(numeroCidades) 
+let solucaoInicial = criarSolucaoInicial(numeroCidades)
