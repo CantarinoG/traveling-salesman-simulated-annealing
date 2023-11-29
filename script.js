@@ -21,7 +21,7 @@ function criarSolucaoInicial(n) { //Cria uma solução inicial
     return solucaoInicial
 }
 
-function calcularCusto(solucao, cidades) {
+function calcularCusto(solucao, cidades) { //Calcula a distância total da solução
     let custoTotal = 0
     for (let i = 0; i < cidades.length; i++) {
         const cidadeAtual = solucao[i];
@@ -39,3 +39,6 @@ function calcularCusto(solucao, cidades) {
 let numeroCidades = 10
 let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
 let solucaoInicial = criarSolucaoInicial(numeroCidades)
+let temperaturaInicial = 1000.0
+let taxaResfrio = 0.003
+let numeroIteracoes = 1000
