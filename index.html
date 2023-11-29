@@ -13,6 +13,7 @@
             text-align: center;
         }
     </style>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -21,22 +22,22 @@
 
     <br>
 
-    <label for="numIterations">Número de iterações:</label>
-    <input type="number" id="numIterations" name="numIterations" min="1" value="1000">
+    <label for="numeroIteracoes">Número de iterações:</label>
+    <input type="number" id="numeroIteracoes" name="numeroIteracoes" min="1" value="1000">
 
     <br>
 
-    <button>Gerar</button>
+    <button id="btnGerar">Gerar</button>
 
     <br>
 
     <h1>Local das Cidades:</h1>
     <canvas id="canvaCoordenadas" width="400" height="400" style="border:1px solid #000;"></canvas>
     <br>
-    <h1>Solução Inicial:</h1>
+    <h1 id="headerInicial">Solução Inicial:</h1>
     <canvas id="canvaInicial" width="400" height="400" style="border:1px solid #000;"></canvas>
     <br>
-    <h1>Melhor Solução:</h1>
+    <h1 id="headerMelhor">Melhor Solução:</h1>
     <canvas id="canvaMelhor" width="400" height="400" style="border:1px solid #000;"></canvas>
     <br>
 

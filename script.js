@@ -80,14 +80,46 @@ function probAceitacao(custoAtual, proxCusto, temperatura) {
     return Math.exp((custoAtual - proxCusto) / temperatura);
 }
 
-let numeroCidades = 10
-let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
-let solucaoInicial = criarSolucaoInicial(numeroCidades)
-let temperaturaInicial = 1000.0
-let taxaResfrio = 0.003
-let numeroIteracoes = 1000
-let melhorRota = simulatedAnnealing(cidades, temperaturaInicial, taxaResfrio, numeroIteracoes, solucaoInicial)
-console.log(solucaoInicial)
-console.log(calcularCusto(solucaoInicial, cidades))
-console.log(melhorRota)
-console.log(calcularCusto(melhorRota, cidades))
+function plotarCidades(canva, cidades) {
+    var c = canva.getContext("2d");
+    for (let i = 0; i < cidades.length; i++) {
+        c.beginPath();
+        c.arc(cidades[i][0], cidades[i][1], 5, 0, 2 * Math.PI); // Draw a circle at the specified coordinates
+        c.fillStyle = "blue"; // Set the fill color
+        c.fill(); // Fill the circle
+        c.closePath();
+    }
+}
+
+function plotarCaminho(canva, cidades, solucao) {
+    var c = canva.getContext("2d");
+    for (let i = 0; i < solucao.length; i++) {
+        let primeiraCoord = cidades[solucao[i]];
+        let segundaCoord = cidades[solucao[(i + 1) % solucao.length]];
+        c.beginPath();
+        c.moveTo(primeiraCoord[0], primeiraCoord[1]);
+        c.lineTo(segundaCoord[0], segundaCoord[1]);
+        c.strokeStyle = "blue";
+        c.stroke();
+    }
+}
+
+
+document.getElementById("btnGerar").onclick = function () {
+    let numeroCidades = document.getElementById("numeroCidades").value;
+    let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
+    let solucaoInicial = criarSolucaoInicial(numeroCidades)
+    let temperaturaInicial = 1000.0
+    let taxaResfrio = 0.003
+    let numeroIteracoes = document.getElementById("numeroIteracoes").value;
+    let melhorRota = simulatedAnnealing(cidades, temperaturaInicial, taxaResfrio, numeroIteracoes, solucaoInicial)
+
+    document.getElementById("btnGerar").disabled = true
+    document.getElementById("headerInicial").textContent = `Solução Inicial: (Distância Total: ${Math.round(calcularCusto(solucaoInicial, cidades))})`
+    document.getElementById("headerMelhor").textContent = `Melhor Solução: (Distância Total: ${Math.round(calcularCusto(melhorRota, cidades))})`
+    plotarCidades(document.getElementById("canvaCoordenadas"), cidades)
+    plotarCidades(document.getElementById("canvaInicial"), cidades)
+    plotarCidades(document.getElementById("canvaMelhor"), cidades)
+    plotarCaminho(document.getElementById("canvaInicial"), cidades, solucaoInicial)
+    plotarCaminho(document.getElementById("canvaMelhor"), cidades, melhorRota)
+};
