@@ -72,6 +72,13 @@ function gerarSolucaoVizinha(solucao) {
     return solucaovizinha;
 }
 
+function probAceitacao(custoAtual, proxCusto, temperatura) {
+    if (proxCusto < custoAtual) {
+        return 1;
+    }
+    return Math.exp((custoAtual - proxCusto) / temperatura);
+}
+
 let numeroCidades = 10
 let cidades = criarCoordenadas(numeroCidades) //Coordenadas geradas aleatoriamente para o nosso problema
 let solucaoInicial = criarSolucaoInicial(numeroCidades)
